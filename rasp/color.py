@@ -5,13 +5,15 @@ from requests.exceptions import RequestException  # 导入异常处理模块
 import time  # 导入时间模块用于延时
 import os  # 用于环境变量设置
 
-# 设置环境变量来抑制Qt警告
-os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.qpa.*=false"
 
 """
 这个程序用于通过摄像头检测红色和蓝色物体，
 并根据检测结果向ESP8266发送控制指令来控制舵机运动
 """
+
+
+# 设置环境变量来抑制Qt警告
+os.environ["QT_LOGGING_RULES"] = "*.debug=false;qt.qpa.*=false"
 
 # 颜色阈值（HSV格式）
 red_lower = np.array([0, 120, 70])
@@ -20,7 +22,7 @@ blue_lower = np.array([100, 150, 50])
 blue_upper = np.array([130, 255, 255])
 
 MIN_CONTOUR_AREA = 1000  # 设置最小轮廓面积阈值，用于过滤噪声
-ESP8266_URL = "http://192.168.137.134"  # ESP8266的IP地址，移除@符号
+ESP8266_URL = "http://192.168.137.134"  # ESP8266的IP地址，需通过电脑查询
 REQUEST_TIMEOUT = 2.0  # 增加超时时间到2秒，给舵机动作留出足够时间
 COMMAND_INTERVAL = 1.5  # 增加命令发送间隔到1.5秒，因为舵机需要时间完成动作
 last_command_time = 0  # 上次发送命令的时间
@@ -115,7 +117,7 @@ while True:
         if send_command("down"):  # 发送低头指令给ESP8266
             print("Blue detected, send DOWN command")  # 在终端打印检测到蓝色的信息
 
-    # 显示实时画面（可选）
+    # 显示实时画面
     cv2.imshow('Frame', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
