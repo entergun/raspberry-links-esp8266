@@ -28,7 +28,7 @@ COMMAND_INTERVAL = 1.5  # 增加命令发送间隔到1.5秒，因为舵机需要
 last_command_time = 0  # 上次发送命令的时间
 
 # 初始化摄像头
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0) #读取摄像头
 if not cap.isOpened():
     print("错误：无法打开摄像头")
     exit()
@@ -119,7 +119,7 @@ while True:
 
     # 显示实时画面
     cv2.imshow('Frame', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q'): #按下“q”退出
         break
 
 cap.release()
